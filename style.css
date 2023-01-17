@@ -6,14 +6,15 @@
 
 body{
     display: flex;
-    height: 88vh;
+    height: 100vh;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-direction: column;
     background: url(img/rusia_tetris.jpg) no-repeat center center/cover;
 }
 
 #tetris{
-    background-color: rgba(255, 255, 255, 0.719);
+    background-color: black;
+    box-shadow: 0 0 10px white;
     color: #00ffff
 }

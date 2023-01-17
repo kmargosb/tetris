@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    height: 88vh;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background: url(img/rusia_tetris.jpg) no-repeat center center/cover;
+}
+
+#tetris{
+    background-color: rgba(255, 255, 255, 0.719);
+    color: #00ffff
+}

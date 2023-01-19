@@ -1,6 +1,18 @@
+// ---------------Variables--------------
+const $gameOver = document.querySelector('.go-py1');
+const $score = document.getElementsByClassName('score');
+
+let tetramino = null;
+const row = 20;
+const colums = 10;
+let grid = getGrid();
+
+//---------------Canvas ----------------
 const canvas = document.getElementById("tetris");
 const ctx = canvas.getContext("2d");
+ctx.scale(30, 30);
 
+// ---------- Piezas y colores -----------
 const tetraminos = [
   [
     [1, 0, 0, 0],
@@ -49,14 +61,18 @@ const colors = [
   "#ffa500",
 ];
 
-let tetramino = null;
-const row = 20;
-const colums = 10;
-ctx.scale(20, 20);
-let grid = getGrid();
-
+//--------- Movimiento -----------
 setInterval(newGame, 1000);
 
+//----------Funciones --------------
+
+function newGame() {
+  if (tetramino == null) {
+    tetramino = getRandomnumber();
+    renderTetramino();
+  }
+  caida();
+}
 function getRandomnumber() {
   let nro = Math.floor(Math.random() * 7);
   // console.log(tetrominos[nro]);
@@ -66,37 +82,30 @@ function getRandomnumber() {
   let y = -1;
   return { piezas, x, y, colorPiezas };
 }
-function newGame() {
-  if (tetramino == null) {
-    tetramino = getRandomnumber();
-    renderTetramino();
-  }
-  caida();
-}
 function renderTetramino() {
   let pieza = tetramino.piezas;
   for (let i = 0; i < pieza.length; i++) {
     for (let j = 0; j < pieza[i].length; j++) {
       if (pieza[i][j] == 1) {
         ctx.fillStyle = colors[tetramino.colorPiezas];
-        ctx.fillRect(tetramino.x + j, tetramino.y + i, 1, 1);
-        console.log(tetramino.x + j, tetramino.y + i, 1, 1);
-        console.log("esto es j=" +" " + j)
-        console.log("esto es i=" + " " + i)
-        console.log(tetramino.y + j)
+        ctx.fillRect(tetramino.x + j, tetramino.y + i, 0.95, 0.95);
+        // console.log(tetramino.x + j, tetramino.y + i, 1, 1);
+        // console.log("esto es j=" +" " + j)
+        // console.log("esto es i=" + " " + i)
+        // console.log(tetramino.y + j)
       }
     }
   }
 }
 function getGrid() {
   let grid = [];
+  // console.log(grid);
   for (let i = 0; i < row; i++) {
     grid.push([]);
     for (let j = 0; j < colums; j++) {
       grid[i].push(0);
     }
   }
-  console.log(grid);
   return grid;
 }
 function renderGrid() {
@@ -109,28 +118,66 @@ function renderGrid() {
   renderTetramino();
 }
 function caida() {
-  if (!colision(tetramino.x, tetramino.y + 1))
-   tetramino.y += 1;
+  if (!colision(tetramino.x, tetramino.y + 1)) {
+    tetramino.y += 1;
+  } else {
+    for (let i = 0; i < tetramino.piezas.length; i++) {
+      for (let j = 0; j < tetramino.piezas[i].length; j++) {
+        if (tetramino.piezas[i][j] == 1) {
+          let c = tetramino.x + j;
+          let r = tetramino.y + i;
+          grid[r][c] = tetramino.colorPiezas;
+        }
+      }
+    }
+    if(tetramino.y <= 0){
+      $gameOver.style.cssText = 'display: flex;'   
+    }
+    tetramino = null;
+  }
   renderGrid();
 }
 function moveLeft() {
-  if (!colision(tetramino.x - 1, tetramino.y))
-   tetramino.x -= 1;
+  if (!colision(tetramino.x - 1, tetramino.y)) tetramino.x -= 1;
   renderGrid();
 }
 function moveRight() {
-  if (!colision(tetramino.x + 1, tetramino.y))
-   tetramino.x += 1;
+  if (!colision(tetramino.x + 1, tetramino.y)) tetramino.x += 1;
   renderGrid();
 }
-function colision(x, y) {
-  let piece = tetramino.piezas;
+function rotacion(){
+  let rotate = [];
+  let pieza = tetramino.piezas;
+
+  for(let i=0; i<pieza.length; i++){
+    rotate.push([]);
+    for(let j=0; j<pieza[i].length; j++){
+      rotate[i].push(0);
+    }
+  }
+    for(let i=0; i<pieza.length; i++){
+      for(let j=0; j<pieza[i].length; j++){
+        rotate[i][j] = pieza[j][i];
+      }
+    }
+    for(let i=0;i<rotate.length;i++){
+      rotate[i] = rotate[i].reverse();
+    }
+  if(!colision(tetramino.x,tetramino.y,rotate))
+  tetramino.piezas = rotate;
+  renderGrid();
+}
+function colision(x, y, rotate) {
+  let piece = rotate || tetramino.piezas;
   for (i = 0; i < piece.length; i++) {
     for (j = 0; j < piece[i].length; j++) {
       if (piece[i][j] == 1) {
         let c = x + j;
         let r = y + i;
         if (c >= 0 && c < colums && r >= 0 && r < row) {
+          if(grid[r][c] >0){
+            return true;
+          }
         } else {
           return true;
         }

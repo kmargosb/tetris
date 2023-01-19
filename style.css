@@ -5,16 +5,42 @@
 }
 
 body{
-    display: flex;
     height: 100vh;
+    background: url(img/rusia_tetris.jpg) no-repeat center center/cover;
+}
+.game{
+    height: 100vh;
+    display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    background: url(img/rusia_tetris.jpg) no-repeat center center/cover;
+    
+}
+.go-py1{
+    width: 150px;
+    height: 50px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 0.5rem;
+    border: solid 0.3rem white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;  
+}
+.game-over h2{
+    color: white;
+    font-size: 1rem;
+}
+.score{
+    width: 150px;
+    height: 100px;
+    background-color: black;
+    border-radius: 0.5rem;
+    border: solid 0.3rem white;    
+    top: 100px;
 }
 
 #tetris{
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     box-shadow: 0 0 10px white;
     color: #00ffff
 }

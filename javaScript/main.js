@@ -64,7 +64,7 @@ function getRandomnumber() {
   let colorPiezas = nro + 1;
   let x = 4;
   let y = -1;
-  return {piezas, x, y, colorPiezas};
+  return { piezas, x, y, colorPiezas };
 }
 function newGame() {
   if (tetramino == null) {
@@ -79,8 +79,11 @@ function renderTetramino() {
     for (let j = 0; j < pieza[i].length; j++) {
       if (pieza[i][j] == 1) {
         ctx.fillStyle = colors[tetramino.colorPiezas];
-        ctx.fillRect(tetramino.x + j, tetramino.y + i, 1, 1);        
-        // console.log(pieza[i].length);
+        ctx.fillRect(tetramino.x + j, tetramino.y + i, 1, 1);
+        console.log(tetramino.x + j, tetramino.y + i, 1, 1);
+        console.log("esto es j=" +" " + j)
+        console.log("esto es i=" + " " + i)
+        console.log(tetramino.y + j)
       }
     }
   }
@@ -93,6 +96,7 @@ function getGrid() {
       grid[i].push(0);
     }
   }
+  console.log(grid);
   return grid;
 }
 function renderGrid() {
@@ -105,34 +109,46 @@ function renderGrid() {
   renderTetramino();
 }
 function caida() {
-  tetramino.y += 1;
+  if (!colision(tetramino.x, tetramino.y + 1))
+   tetramino.y += 1;
   renderGrid();
 }
-function moveLeft(){
-  tetramino.x-=1;
+function moveLeft() {
+  if (!colision(tetramino.x - 1, tetramino.y))
+   tetramino.x -= 1;
   renderGrid();
 }
-function moveRight(){
-  tetramino.x+=1;
+function moveRight() {
+  if (!colision(tetramino.x + 1, tetramino.y))
+   tetramino.x += 1;
   renderGrid();
 }
-function colision(){
-  let piece = tetramino.pieza;
-  for(i=0; i<piece.length; i++){
-    for(j=0; j<piece[i].length; j++){
+function colision(x, y) {
+  let piece = tetramino.piezas;
+  for (i = 0; i < piece.length; i++) {
+    for (j = 0; j < piece[i].length; j++) {
+      if (piece[i][j] == 1) {
+        let c = x + j;
+        let r = y + i;
+        if (c >= 0 && c < colums && r >= 0 && r < row) {
+        } else {
+          return true;
+        }
+      }
     }
   }
+  return false;
 }
-document.addEventListener("keydown",function(e){
+document.addEventListener("keydown", function (e) {
   // console.log(e);
   let key = e.code;
-  if(key == "ArrowLeft"){
+  if (key == "ArrowLeft") {
     moveLeft();
-  } else if (key == "ArrowRight"){
+  } else if (key == "ArrowRight") {
     moveRight();
-  }else if (key == "ArrowDown"){
+  } else if (key == "ArrowDown") {
     caida();
-  }else if (key =="ArrowUp"){
+  } else if (key == "ArrowUp") {
     rotacion();
   }
 });

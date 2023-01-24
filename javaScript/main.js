@@ -1,34 +1,34 @@
-// ---------------Variables--------------
-const $gameOver = document.querySelector('.go-py1');
-const $score = document.getElementsByClassName('score');
-
-let tetramino = null;
-const row = 20;
-const colums = 10;
-let grid = getGrid();
+// ---------------Variables DOM--------------
+const $gameOver = document.querySelector(".go-py1");
+const $score = document.getElementsByClassName("score");
 
 //---------------Canvas ----------------
 const canvas = document.getElementById("tetris");
 const ctx = canvas.getContext("2d");
 ctx.scale(30, 30);
 
+let tetramino = null;
+const row = 20;
+const colums = 10;
+let grid = getGrid();
+
 // ---------- Piezas y colores -----------
 const tetraminos = [
   [
-    [1, 0, 0, 0],
-    [1, 0, 0, 0],
-    [1, 0, 0, 0],
-    [1, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 1, 0, 0],
+    [0, 1, 0, 0],
+    [0, 1, 0, 0],
   ],
   [
-    [0, 1, 0],
-    [0, 1, 0],
-    [1, 1, 0],
+    [1, 1, 1],
+    [0, 0, 1],
+    [0, 0, 0],
   ],
   [
+    [1, 1, 1],
     [1, 0, 0],
-    [1, 0, 0],
-    [1, 1, 0],
+    [0, 0, 0],
   ],
   [
     [1, 1],
@@ -61,7 +61,7 @@ const colors = [
   "#ffa500",
 ];
 
-//--------- Movimiento -----------
+//--------- Movimiento en caida -----------
 setInterval(newGame, 1000);
 
 //----------Funciones --------------
@@ -93,13 +93,13 @@ function renderTetramino() {
         // console.log("esto es j=" +" " + j)
         // console.log("esto es i=" + " " + i)
         // console.log(tetramino.y + j)
+        // console.log(tetramino.x)
       }
     }
   }
 }
 function getGrid() {
   let grid = [];
-  // console.log(grid);
   for (let i = 0; i < row; i++) {
     grid.push([]);
     for (let j = 0; j < colums; j++) {
@@ -112,7 +112,7 @@ function renderGrid() {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       ctx.fillStyle = colors[grid[i][j]];
-      ctx.fillRect(j, i, 1, 1);
+      ctx.fillRect(j, i, 0.95, 0.95);
     }
   }
   renderTetramino();
@@ -130,8 +130,8 @@ function caida() {
         }
       }
     }
-    if(tetramino.y <= 0){
-      $gameOver.style.cssText = 'display: flex;'   
+    if (tetramino.y <= 0) {
+      $gameOver.style.cssText = "display: flex;";
     }
     tetramino = null;
   }
@@ -145,26 +145,23 @@ function moveRight() {
   if (!colision(tetramino.x + 1, tetramino.y)) tetramino.x += 1;
   renderGrid();
 }
-function rotacion(){
+function rotacion() {
   let rotate = [];
   let pieza = tetramino.piezas;
 
-  for(let i=0; i<pieza.length; i++){
+  for (let i = 0; i < pieza.length; i++) {
     rotate.push([]);
-    for(let j=0; j<pieza[i].length; j++){
+    for (let j = 0; j < pieza[i].length; j++) {
       rotate[i].push(0);
+      rotate[i][j] = pieza[j][i];
     }
   }
-    for(let i=0; i<pieza.length; i++){
-      for(let j=0; j<pieza[i].length; j++){
-        rotate[i][j] = pieza[j][i];
-      }
-    }
-    for(let i=0;i<rotate.length;i++){
-      rotate[i] = rotate[i].reverse();
-    }
-  if(!colision(tetramino.x,tetramino.y,rotate))
-  tetramino.piezas = rotate;
+  for (let i = 0; i < rotate.length; i++) {
+    rotate[i] = rotate[i].reverse();
+  }
+  if (!colision(tetramino.x, tetramino.y, rotate)) {
+    tetramino.piezas = rotate;      
+  }  
   renderGrid();
 }
 function colision(x, y, rotate) {
@@ -175,7 +172,7 @@ function colision(x, y, rotate) {
         let c = x + j;
         let r = y + i;
         if (c >= 0 && c < colums && r >= 0 && r < row) {
-          if(grid[r][c] >0){
+          if (grid[r][c] > 0) {
             return true;
           }
         } else {

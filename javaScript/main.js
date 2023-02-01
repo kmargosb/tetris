@@ -67,12 +67,29 @@ setInterval(newGame, 1000);
 //----------Funciones --------------
 
 function newGame() {
+  score();
   if (tetramino == null) {
     tetramino = getRandomnumber();
     renderTetramino();
   }
   caida();
 }
+function score() {
+  for (let i = 0; i < grid.length; i++) {
+      let tetris = true;
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] == 0) {
+        tetris = false;
+      }
+    }
+    if(tetris){
+      grid.splice(i,1);
+      grid.unshift(0,0,0,0,0,0,0,0,0,0);
+    }  
+  }
+}
+
+
 function getRandomnumber() {
   let nro = Math.floor(Math.random() * 7);
   // console.log(tetrominos[nro]);
@@ -130,7 +147,7 @@ function caida() {
         }
       }
     }
-    if (tetramino.y <= 0) {
+    if (tetramino.y < 1) {
       $gameOver.style.cssText = "display: flex;";
     }
     tetramino = null;
@@ -160,8 +177,8 @@ function rotacion() {
     rotate[i] = rotate[i].reverse();
   }
   if (!colision(tetramino.x, tetramino.y, rotate)) {
-    tetramino.piezas = rotate;      
-  }  
+    tetramino.piezas = rotate;
+  }
   renderGrid();
 }
 function colision(x, y, rotate) {

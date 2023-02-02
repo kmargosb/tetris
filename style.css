@@ -1,73 +1,141 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    height: 100vh;
-    background: url(img/rusia_tetris.jpg) no-repeat center center/cover;
+body {
+  height: 100vh;
+  background: url(img/rusia_tetris.jpg) no-repeat center center/cover;
 }
-.game{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row-reverse;
-    
+.game {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
 }
-.go-py1{
-    width: 150px;
-    height: 50px;
-    background-color: rgb(0, 0, 0);
-    border-radius: 0.5rem;
-    border: solid 0.3rem white;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    position: absolute;  
+.go-py1 {
+  width: 150px;
+  height: 50px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 0.5rem;
+  border: solid 0.3rem white;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
 }
-.game-over h2{
-    color: white;
-    font-size: 1rem;
-}
-
-.spy, .lvl, .ln{
-    text-align: center;
-    color: white;
-    font-size: 1.2rem;
-    padding-top: 0.8rem;
+.game-over h2 {
+  color: white;
+  font-size: 1rem;
 }
 
-#tetris, #nextPiece{
-    background-color: rgb(0, 0, 0);
-    box-shadow: 0 0 10px white;    
+.spy,
+.lvl,
+.ln {
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  padding-top: 0.8rem;
 }
-#nextPiece{
-    margin: 0 0 1rem 1rem;
+
+#tetris,
+#nextPiece {
+  background-color: rgb(0, 0, 0);
+  box-shadow: 0 0 10px white;
+}
+#nextPiece {
+  margin: 0 0 1rem 1rem;
 }
 
 /* ---- DATOS ----*/
 
-.score, .level, .line{
-    width: 150px;
-    height: 100px;
-    background-color: black;
-    color: white;
-    text-align: center;
-    padding-top: 0.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px white;    
-    top: 100px;
-    margin: 0 0 1rem 1rem;
-    
+.score,
+.level,
+.line {
+  width: 150px;
+  height: 100px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding-top: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px white;
+  top: 100px;
+  margin: 0 0 1rem 1rem;
 }
 
-.next-h2{
-    background-color: black;
-    box-shadow: 0 0 10px white;
-    text-align: center;
-    margin: 0 0 1rem 1rem;
-    color: white;
-    z-index: 10;
+.next-h2 {
+  background-color: black;
+  box-shadow: 0 0 10px white;
+  text-align: center;
+  margin: 0 0 1rem 1rem;
+  color: white;
+  z-index: 10;
+}
+
+@media (max-width: 1000px) {
+  body {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #tetris {
+    width: 200px;
+    height: 400px;
+  }
+  .score,
+  .level,
+  .line {
+    width: 100px;
+    height: 75px;
+  }
+  #nextPiece {
+    width: 100px;
+    height: 75px;
+  }
+
+  /*----BTN-MObIL ----*/
+
+  .btn-left button,
+  .btn-right button {
+    width: 60px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.562);
+    color: rgba(255, 255, 255, 0.836);
+  }  
+
+  .btn-left .move-left {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+  }
+  .btn-left .move-down{
+    position: absolute;
+    top: 65%;
+    left: 10%;
+  }
+  .btn-left .rotate-piece{
+    position: absolute;
+    top: 35%;
+    left: 10%;
+  }
+
+  .btn-right .move-right {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+  }
+  .btn-right .move-down{
+    position: absolute;
+    top: 65%;
+    right: 10%;
+  }
+  .btn-right .rotate-piece{
+    position: absolute;
+    top: 35%;
+    right: 10%;
+  } 
+
 }

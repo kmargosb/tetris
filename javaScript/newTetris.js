@@ -3,9 +3,17 @@ const $gameOverAudio = new Audio("audio/gameover2.wav");
 const $pieceOff = new Audio("audio/pieza_caida.wav");
 const $troika = new Audio("audio/troika.mp3");
 const $lineOff = new Audio("audio/line_off.wav");
-const $levelUp = new Audio("audio/level_up.mp3")
+const $levelUp = new Audio("audio/level_up.mp3");
 
-$troika.play();
+// ----------mobile----------
+const $rotatePiece = document.querySelector('.rotate-piece');
+const $moveLeft = document.querySelector('.move-left');
+const $moveRight = document.querySelector('.move-right');
+const $moveDown = document.querySelector('.move-down');
+
+
+
+
 // ----------- Canvas ------------
 
 const canvas = document.getElementById("tetris");
@@ -83,6 +91,8 @@ function createPiece(tipo) {
     ];
   }
 }
+
+$troika.play();
 
 updateData();
 playerReset();
@@ -178,12 +188,10 @@ function playerReset() {
   player.position.x = 4;
   player.position.y = 0;
 
-  if(colision(grid, player)){    
+  if (colision(grid, player)) {
     $gameOver.style.cssText = "display: flex";
     $gameOverAudio.play();
   }
-  
-  
 }
 function drawMatriz(matriz, offset) {
   matriz.forEach((row, y) => {

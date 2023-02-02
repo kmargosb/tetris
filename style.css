@@ -111,12 +111,12 @@ body {
     top: 50%;
     left: 5%;
   }
-  .btn-left .move-down{
+  .btn-left .move-downl{
     position: absolute;
     top: 65%;
     left: 10%;
   }
-  .btn-left .rotate-piece{
+  .btn-left .rotate-piecel{
     position: absolute;
     top: 35%;
     left: 10%;
@@ -127,12 +127,12 @@ body {
     top: 50%;
     right: 5%;
   }
-  .btn-right .move-down{
+  .btn-right .move-downr{
     position: absolute;
     top: 65%;
     right: 10%;
   }
-  .btn-right .rotate-piece{
+  .btn-right .rotate-piecer{
     position: absolute;
     top: 35%;
     right: 10%;

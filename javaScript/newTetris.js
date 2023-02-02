@@ -6,10 +6,12 @@ const $lineOff = new Audio("audio/line_off.wav");
 const $levelUp = new Audio("audio/level_up.mp3");
 
 // ----------mobile----------
-const $rotatePiece = document.querySelector('.rotate-piece');
+const $rotatePiecer = document.querySelector('.rotate-piecer');
+const $rotatePiecel = document.querySelector('.rotate-piecel');
 const $moveLeft = document.querySelector('.move-left');
 const $moveRight = document.querySelector('.move-right');
-const $moveDown = document.querySelector('.move-down');
+const $moveDownl = document.querySelector('.move-downl');
+const $moveDownr = document.querySelector('.move-downr');
 
 
 
@@ -281,4 +283,23 @@ document.addEventListener("keydown", function (e) {
   } else if (key == "ArrowUp") {
     rotacion();
   }
+});
+$moveLeft.addEventListener('click', function(){
+  moveLeft();
+});
+
+$moveRight.addEventListener('click', function(){
+  moveRight();
+});
+$rotatePiecel.addEventListener('click', function(){
+  rotacion();
+});
+$moveDownl.addEventListener('click', function(){
+  moveDown();
+});
+$rotatePiecer.addEventListener('click', function(){
+  rotacion();
+});
+$moveDownr.addEventListener('click', function(){
+  moveDown();
 });

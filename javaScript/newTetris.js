@@ -1,7 +1,11 @@
-function newGamePlayer(){
-  
-}
+// ----------Audio ---------------
+const $gameOverAudio = new Audio("audio/gameover2.wav");
+const $pieceOff = new Audio("audio/pieza_caida.wav");
+const $troika = new Audio("audio/troika.mp3");
+const $lineOff = new Audio("audio/line_off.wav");
+const $levelUp = new Audio("audio/level_up.mp3")
 
+$troika.play();
 // ----------- Canvas ------------
 
 const canvas = document.getElementById("tetris");
@@ -116,6 +120,7 @@ function eraseRow() {
     }
     const row = grid.splice(y, 1)[0].fill(0);
     grid.unshift(row);
+    $lineOff.play();
 
     player.score += rowCount * 10;
     player.lines++;
@@ -123,6 +128,8 @@ function eraseRow() {
 
     if (player.lines % 10 == 0) {
       player.level++;
+      $levelUp.play();
+      $troika.play();
       clearInterval(time);
       setInterval(function () {
         moveDown();
@@ -130,6 +137,7 @@ function eraseRow() {
       }, 1000 - 100);
     }
   }
+  $pieceOff.play();
 }
 function colision(grid, player) {
   let matriz = player.tetramino;
@@ -170,10 +178,11 @@ function playerReset() {
   player.position.x = 4;
   player.position.y = 0;
 
-  if(colision(grid, player)){
-    
+  if(colision(grid, player)){    
     $gameOver.style.cssText = "display: flex";
+    $gameOverAudio.play();
   }
+  
   
 }
 function drawMatriz(matriz, offset) {

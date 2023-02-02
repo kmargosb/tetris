@@ -5,7 +5,7 @@ const $troika = new Audio("audio/troika.mp3");
 const $lineOff = new Audio("audio/line_off.wav");
 const $levelUp = new Audio("audio/level_up.mp3")
 
-
+$troika.play();
 // ----------- Canvas ------------
 
 const canvas = document.getElementById("tetris");
@@ -105,7 +105,6 @@ const draw = () => {
   drawMatrizNext(player.next, { x: 1, y: 1 });
 };
 let time = setInterval(function () {
-  $troika.play();
   moveDown();
   draw();
 }, 1000);
@@ -133,7 +132,6 @@ function eraseRow() {
       $troika.play();
       clearInterval(time);
       setInterval(function () {
-        $troika.play();
         moveDown();
         draw();
       }, 1000 - 100);

@@ -13,6 +13,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: row-reverse;
     
 }
 .go-py1{
@@ -30,17 +31,43 @@ body{
     color: white;
     font-size: 1rem;
 }
-.score{
+
+.spy, .lvl, .ln{
+    text-align: center;
+    color: white;
+    font-size: 1.2rem;
+    padding-top: 0.8rem;
+}
+
+#tetris, #nextPiece{
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 0 10px white;    
+}
+#nextPiece{
+    margin: 0 0 1rem 1rem;
+}
+
+/* ---- DATOS ----*/
+
+.score, .level, .line{
     width: 150px;
     height: 100px;
     background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 0.5rem;
     border-radius: 0.5rem;
-    border: solid 0.3rem white;    
+    box-shadow: 0 0 10px white;    
     top: 100px;
+    margin: 0 0 1rem 1rem;
+    
 }
 
-#tetris{
-    background-color: rgb(0, 0, 0);
+.next-h2{
+    background-color: black;
     box-shadow: 0 0 10px white;
-    color: #00ffff
+    text-align: center;
+    margin: 0 0 1rem 1rem;
+    color: white;
+    z-index: 10;
 }

@@ -1,77 +1,88 @@
+function newGamePlayer(){
+  
+}
+
 // ----------- Canvas ------------
 
 const canvas = document.getElementById("tetris");
+const canvasNext = document.getElementById("nextPiece");
+const ctxN = canvasNext.getContext("2d");
 const ctx = canvas.getContext("2d");
 const row = 20;
 const colums = 10;
+const rowN = 6;
+const columsN = 5;
+ctx.scale(30, 30);
+ctxN.scale(30, 33.33);
 const grid = createGrid();
 const player = {
-  position: { x: 4, y: -1 },
+  position: { x: 0, y: 0 },
   tetramino: null,
+  next: null,
+  score: 0,
+  level: 1,
+  lines: 0,
 };
+const $gameOver = document.querySelector(".go-py1");
 const colors = [
-    null,
-    "#00ffff",
-    "#ffff00",
-    "#ff00ff",
-    "#00ff00",
-    "#ff0000",
-    "#0000ff",
-    "#ffa500",
-  ];
+  null,
+  "#00ffff",
+  "#ffff00",
+  "#ff00ff",
+  "#00ff00",
+  "#ff0000",
+  "#0000ff",
+  "#ffa500",
+];
+function createPiece(tipo) {
+  if (tipo === "I") {
+    return [
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+    ];
+  } else if (tipo === "J") {
+    return [
+      [2, 2, 2],
+      [0, 0, 2],
+      [0, 0, 0],
+    ];
+  } else if (tipo === "L") {
+    return [
+      [3, 3, 3],
+      [3, 0, 0],
+      [0, 0, 0],
+    ];
+  } else if (tipo === "O") {
+    return [
+      [4, 4],
+      [4, 4],
+    ];
+  } else if (tipo === "S") {
+    return [
+      [0, 5, 5],
+      [5, 5, 0],
+      [0, 0, 0],
+    ];
+  } else if (tipo === "Z") {
+    return [
+      [6, 6, 0],
+      [0, 6, 6],
+      [0, 0, 0],
+    ];
+  } else if (tipo === "T") {
+    return [
+      [7, 7, 7],
+      [0, 7, 0],
+      [0, 0, 0],
+    ];
+  }
+}
 
-ctx.scale(30, 30);
+updateData();
 playerReset();
 
-setInterval(function () {
-  moveDown();
-  draw();
-}, 1000);
-function createPiece(tipo) {
-    if (tipo === "I") {
-      return [
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-      ];
-    } else if (tipo === "J") {
-      return [
-        [2, 2, 2],
-        [0, 0, 2],
-        [0, 0, 0],
-      ];
-    } else if (tipo === "L") {
-      return [
-        [3, 3, 3],
-        [3, 0, 0],
-        [0, 0, 0],
-      ];
-    } else if (tipo === "O") {
-      return [
-        [4, 4],
-        [4, 4],
-      ];
-    } else if (tipo === "S") {
-      return [
-        [0, 5, 5],
-        [5, 5, 0],
-        [0, 0, 0],
-      ];
-    } else if (tipo === "Z") {
-      return [
-        [6, 6, 0],
-        [0, 6, 6],
-        [0, 0, 0],
-      ];
-    } else if (tipo === "T") {
-      return [
-        [7, 7, 7],
-        [0, 7, 0],
-        [0, 0, 0],
-      ];
-    }
-  };
 function createGrid() {
   const grid = [];
   for (let x = 0; x < row; x++) {
@@ -81,6 +92,44 @@ function createGrid() {
     }
   }
   return grid;
+}
+const draw = () => {
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, 10, 20);
+  drawMatriz(grid, { x: 0, y: 0 });
+  drawMatriz(player.tetramino, player.position);
+  drawMatrizNext(player.next, { x: 1, y: 1 });
+};
+let time = setInterval(function () {
+  moveDown();
+  draw();
+}, 1000);
+function eraseRow() {
+  let rowCount = 1;
+
+  bucle: for (let y = 0; y < grid.length; y++) {
+    for (let x = 0; x < grid[y].length; x++) {
+      // console.table(grid[y][x]);
+      if (grid[y][x] === 0) {
+        continue bucle;
+      }
+    }
+    const row = grid.splice(y, 1)[0].fill(0);
+    grid.unshift(row);
+
+    player.score += rowCount * 10;
+    player.lines++;
+    rowCount *= 2;
+
+    if (player.lines % 10 == 0) {
+      player.level++;
+      clearInterval(time);
+      setInterval(function () {
+        moveDown();
+        draw();
+      }, 1000 - 100);
+    }
+  }
 }
 function colision(grid, player) {
   let matriz = player.tetramino;
@@ -110,12 +159,25 @@ function newTetramino(grid, player) {
 function playerReset() {
   let nro = Math.floor(Math.random() * 7);
   let piezas = "ILJOSZT";
-  player.tetramino = createPiece(piezas.charAt(nro));
+
+  if (player.next === null) {
+    player.tetramino = createPiece(piezas.charAt(nro));
+  } else {
+    player.tetramino = player.next;
+  }
+  player.next = createPiece(piezas.charAt(nro));
+
   player.position.x = 4;
-  player.position.y = -1;
+  player.position.y = 0;
+
+  if(colision(grid, player)){
+    
+    $gameOver.style.cssText = "display: flex";
+  }
+  
 }
-function drawTetramino(tetramino, offset) {
-  tetramino.forEach((row, y) => {
+function drawMatriz(matriz, offset) {
+  matriz.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
         ctx.fillStyle = colors[value];
@@ -124,34 +186,18 @@ function drawTetramino(tetramino, offset) {
     });
   });
 }
-const draw = () => {
-  ctx.fillStyle = "#000";
-  ctx.fillRect(0, 0, 10, 20);
-  drawTetramino(grid, { x: 0, y: 0 });
-  drawTetramino(player.tetramino, player.position);
-};
-function moveDown() {
-  player.position.y += 1;
-  if (colision(grid, player)) {
-    player.position.y -= 1;
-    newTetramino(grid, player);
-    playerReset();
-  }
-  draw();
-}
-function moveLeft() {
-  player.position.x -= 1;
-  if (colision(grid, player)) {
-    player.position.x += 1;
-  }
-  draw();
-}
-function moveRight() {
-  player.position.x += 1;
-  if (colision(grid, player)) {
-    player.position.x -= 1;
-  }
-  draw();
+function drawMatrizNext(matriz, offset) {
+  ctxN.fillStyle = "#000";
+  ctxN.fillRect(0, 0, columsN, rowN);
+
+  matriz.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        ctxN.fillStyle = colors[value];
+        ctxN.fillRect(x + offset.x, y + offset.y, 0.95, 0.95);
+      }
+    });
+  });
 }
 function rotacion() {
   const pos = player.position.x;
@@ -174,6 +220,36 @@ function playerRotate(tetramino) {
     }
   }
   tetramino.forEach((row) => row.reverse());
+  draw();
+}
+function moveDown() {
+  player.position.y += 1;
+  if (colision(grid, player)) {
+    player.position.y -= 1;
+    newTetramino(grid, player);
+    playerReset();
+    eraseRow();
+    updateData();
+  }
+  draw();
+}
+function updateData() {
+  document.querySelector(".spy").innerHTML = player.score;
+  document.querySelector(".lvl").innerHTML = player.level;
+  document.querySelector(".ln").innerHTML = player.lines;
+}
+function moveLeft() {
+  player.position.x -= 1;
+  if (colision(grid, player)) {
+    player.position.x += 1;
+  }
+  draw();
+}
+function moveRight() {
+  player.position.x += 1;
+  if (colision(grid, player)) {
+    player.position.x -= 1;
+  }
   draw();
 }
 document.addEventListener("keydown", function (e) {

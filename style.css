@@ -7,6 +7,7 @@
 body {
   height: 100vh;
   background: url(img/rusia_tetris.jpg) no-repeat center center/cover;
+  overflow-y: hidden;
 }
 .game {
   height: 100vh;
@@ -49,6 +50,10 @@ body {
   margin: 0 0 1rem 1rem;
 }
 
+.btn-mobil{
+  display: none;
+}
+
 /* ---- DATOS ----*/
 
 .score,
@@ -72,15 +77,13 @@ body {
   text-align: center;
   margin: 0 0 1rem 1rem;
   color: white;
-  z-index: 10;
+  
 }
 
-@media (max-width: 1000px) {
-  body {
-    width: 100vw;
-    height: 100vh;
+@media (max-width: 1280px) {
+  body{
+    min-height: 100vh;
   }
-
   #tetris {
     width: 200px;
     height: 400px;
@@ -97,6 +100,10 @@ body {
   }
 
   /*----BTN-MObIL ----*/
+
+  .btn-mobil{
+    display: inline-block;
+  }
 
   .btn-left button,
   .btn-right button {
@@ -138,4 +145,36 @@ body {
     right: 10%;
   } 
 
+}
+
+@media (max-width: 590px){
+
+
+  .btn-left .move-left {
+    position: absolute;
+    top: 85%;
+    left: 30%;
+  }
+  .btn-left .move-downl{
+    position: absolute;
+    top: 90%;
+    left: 45%;
+  }
+  .btn-left .rotate-piecel{
+    position: absolute;
+    top: 80%;
+    left: 45%;
+  }
+
+  .btn-right .move-right {
+    position: absolute;
+    top: 85%;
+    left: 60%;
+  }
+  .btn-right .move-downr{
+    display: none;
+  }
+  .btn-right .rotate-piecer{
+    display: none;
+  } 
 }

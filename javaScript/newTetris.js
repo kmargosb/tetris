@@ -294,7 +294,7 @@ $moveRight.addEventListener('click', function(){
 $rotatePiecel.addEventListener('click', function(){
   rotacion();
 });
-$moveDownl.addEventListener('click', function(){
+$moveDownl.addEventListener('touchstart', function(){  
   moveDown();
 });
 $rotatePiecer.addEventListener('click', function(){

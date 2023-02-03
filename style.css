@@ -4,10 +4,14 @@
   box-sizing: border-box;
 }
 
+button{
+  user-select: none;
+}
+
 body {
   height: 100vh;
   background: url(img/rusia_tetris.jpg) no-repeat center center/cover;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 .game {
   height: 100vh;
@@ -81,28 +85,12 @@ body {
 }
 
 @media (max-width: 1280px) {
-  body{
-    min-height: 100vh;
-  }
-  #tetris {
-    width: 200px;
-    height: 400px;
-  }
-  .score,
-  .level,
-  .line {
-    width: 100px;
-    height: 75px;
-  }
-  #nextPiece {
-    width: 100px;
-    height: 75px;
-  }
-
-  /*----BTN-MObIL ----*/
+  
+ 
+  
 
   .btn-mobil{
-    display: inline-block;
+    display: block;
   }
 
   .btn-left button,
@@ -147,9 +135,24 @@ body {
 
 }
 
+/*----BTN-Mobvil ----*/
+
 @media (max-width: 590px){
 
-
+  #tetris {
+    width: 200px;
+    height: 400px;
+  }
+  .score,
+  .level,
+  .line {
+    width: 100px;
+    height: 75px;
+  }
+  #nextPiece {
+    width: 100px;
+    height: 100px;
+  }
   .btn-left .move-left {
     position: absolute;
     top: 85%;

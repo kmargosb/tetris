@@ -287,7 +287,6 @@ document.addEventListener("keydown", function (e) {
 $moveLeft.addEventListener('click', function(){
   moveLeft();
 });
-
 $moveRight.addEventListener('click', function(){
   moveRight();
 });

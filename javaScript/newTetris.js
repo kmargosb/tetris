@@ -94,8 +94,6 @@ function createPiece(tipo) {
   }
 }
 
-$troika.play();
-
 updateData();
 playerReset();
 
@@ -141,7 +139,6 @@ function eraseRow() {
     if (player.lines % 10 == 0) {
       player.level++;
       $levelUp.play();
-      $troika.play();
       clearInterval(time);
       setInterval(function () {
         moveDown();
@@ -150,6 +147,7 @@ function eraseRow() {
     }
   }
   $pieceOff.play();
+  $troika.play();
 }
 function colision(grid, player) {
   let matriz = player.tetramino;
@@ -302,3 +300,5 @@ $rotatePiecer.addEventListener('click', function(){
 $moveDownr.addEventListener('click', function(){
   moveDown();
 });
+
+
